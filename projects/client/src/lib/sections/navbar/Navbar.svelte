@@ -1,5 +1,6 @@
 <script lang="ts">
   import Button from "$lib/components/buttons/Button.svelte";
+  import TimeMachineIcon from "$lib/components/icons/TimeMachineIcon.svelte";
   import Link from "$lib/components/link/Link.svelte";
   import Logo from "$lib/components/logo/Logo.svelte";
   import LogoMark from "$lib/components/logo/LogoMark.svelte";
@@ -41,6 +42,7 @@
     </div>
     <RenderFor audience="authenticated">
       <SearchInput />
+      <TimeMachineIcon state="inactive" />
     </RenderFor>
     <div class="trakt-navbar-links">
       <RenderFor audience="all" device={["tablet-lg", "desktop"]}>
