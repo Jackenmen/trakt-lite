@@ -16,20 +16,19 @@
   const { list, isLoading } = useWatchlistList({ type });
 </script>
 
+{#snippet empty()}
+  <p class="small secondary">
+    {emptyMessage}
+  </p>
+{/snippet}
+
 <SectionList
   items={$list}
+  empty={$isLoading ? null : empty}
   {title}
   --height-list={mediaListHeightResolver(type)}
 >
   {#snippet item(media)}
     <MediaItem {type} {media} />
-  {/snippet}
-
-  {#snippet empty()}
-    {#if !$isLoading}
-      <p class="small secondary">
-        {emptyMessage}
-      </p>
-    {/if}
   {/snippet}
 </SectionList>

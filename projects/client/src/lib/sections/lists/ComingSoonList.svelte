@@ -24,18 +24,18 @@
   );
 </script>
 
+{#snippet empty()}
+  <p class="small">{m.coming_soon_empty()}</p>
+  <FindMoviesLink />
+{/snippet}
+
 <SectionList
   items={$list.sort(compare)}
+  empty={$isLoading ? null : empty}
   {title}
   --height-list={mediaListHeightResolver(type)}
 >
   {#snippet item(media)}
     <MediaItem {type} {media} />
-  {/snippet}
-  {#snippet empty()}
-    {#if !$isLoading}
-      <p class="small">{m.coming_soon_empty()}</p>
-      <FindMoviesLink />
-    {/if}
   {/snippet}
 </SectionList>

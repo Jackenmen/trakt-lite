@@ -10,7 +10,7 @@
     title: string;
     items: T[];
     item: Snippet<[T]>;
-    empty?: Snippet;
+    empty: Snippet | Nil;
   };
 
   const { items, title, item, empty }: SectionListProps<T> = $props();

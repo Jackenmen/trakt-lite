@@ -5,11 +5,11 @@
   import { writable, type Writable } from "svelte/store";
   import { scrollTracking } from "./scrollTracking";
 
-  type SectionListProps<T> = {
+  type ShadowListProps<T> = {
     title: string;
     items: T[];
     item: Snippet<[T]>;
-    empty?: Snippet;
+    empty: Snippet | Nil;
     actions?: Snippet;
     scrollContainer?: Writable<HTMLDivElement>;
     scrollX?: Writable<{ left: number; right: number }>;
@@ -23,7 +23,7 @@
     item,
     actions,
     empty,
-  }: SectionListProps<T> = $props();
+  }: ShadowListProps<T> = $props();
   const sideDistance = useVarToPixels("var(--layout-distance-side)");
   const windowShadowWidth = useVarToPixels("var(--ni-64)");
 
@@ -44,11 +44,14 @@
   onMount(() => {
     isMounted.set(true);
   });
+
+  const isEmpty = $derived(empty != null && items.length === 0 && $isMounted);
 </script>
 
 <section
   use:whenInViewport={() => isVisible.set(true)}
   class="shadow-list-container"
+  class:shadow-list-empty={isEmpty}
 >
   <div class="shadow-list-header">
     <h4 class="shadow-list-title ellipsis">{title}</h4>
@@ -75,9 +78,9 @@
           {@render item(i)}
         {/each}
       </div>
-    {:else if empty != null && $isMounted}
+    {:else if isEmpty}
       <div class="shadow-list-empty-state">
-        {@render empty()}
+        {@render empty?.()}
       </div>
     {/if}
   </div>
@@ -88,6 +91,13 @@
   .shadow-list,
   .shadow-list-empty-state {
     min-height: var(--height-list);
+    transition: min-height calc(var(--transition-increment) * 4) ease-in-out;
+  }
+
+  .shadow-list-container.shadow-list-empty,
+  .shadow-list-empty .shadow-list,
+  .shadow-list-empty .shadow-list-empty-state {
+    min-height: calc-size(auto, size);
   }
 
   .shadow-list-container {

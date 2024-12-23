@@ -11,8 +11,14 @@
   const { calendar, isLoading } = useCalendarEpisodes();
 </script>
 
+{#snippet empty()}
+  <p class="small">{m.upcoming_schedule_empty()}</p>
+  <FindShowsLink />
+{/snippet}
+
 <SectionList
   items={$calendar}
+  empty={$isLoading ? null : empty}
   title={m.upcoming_schedule_title()}
   --height-list={mediaListHeightResolver("episode")}
 >
@@ -28,11 +34,5 @@
       type={entry.type}
       showHref={UrlBuilder.show(entry.show.slug)}
     />
-  {/snippet}
-  {#snippet empty()}
-    {#if !$isLoading}
-      <p class="small">{m.upcoming_schedule_empty()}</p>
-      <FindShowsLink />
-    {/if}
   {/snippet}
 </SectionList>

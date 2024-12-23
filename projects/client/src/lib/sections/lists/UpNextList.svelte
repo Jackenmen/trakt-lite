@@ -22,18 +22,18 @@
   });
 </script>
 
+{#snippet empty()}
+  <p class="small">{m.up_next_empty()}</p>
+  <FindShowsLink />
+{/snippet}
+
 <SectionList
   items={$list}
+  empty={$isLoading ? null : empty}
   title={m.up_next_title()}
   --height-list={mediaListHeightResolver("episode")}
 >
   {#snippet item(episode)}
     <NextEpisodeItem {episode} show={episode.show} />
-  {/snippet}
-  {#snippet empty()}
-    {#if !$isLoading}
-      <p class="small">{m.up_next_empty()}</p>
-      <FindShowsLink />
-    {/if}
   {/snippet}
 </SectionList>
