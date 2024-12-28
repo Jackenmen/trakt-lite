@@ -49,21 +49,32 @@
 </script>
 
 {#snippet content(mediaCoverImageUrl: string)}
-  <Link focusable={false} href={UrlBuilder.media(type, media.slug)}>
-    <MediaCover src={mediaCoverImageUrl} alt={`${media.title} poster`}>
-      {#snippet tags()}
-        {#if "episode" in media}
-          <DurationTag>
-            {m.number_of_episodes({ count: media.episode.count })}
-          </DurationTag>
-        {:else if type === "movie"}
-          <DurationTag>
-            {toHumanDuration({ minutes: media.runtime }, languageTag())}
-          </DurationTag>
-        {/if}
-      {/snippet}
-    </MediaCover>
-  </Link>
+  <MediaCover
+    href={UrlBuilder.media(type, media.slug)}
+    src={mediaCoverImageUrl}
+    alt={`${media.title} poster`}
+  >
+    {#snippet tags()}
+      <RenderFor audience="authenticated">
+        <WatchlistActionButton
+          title={media.title}
+          onAdd={addToWatchlist}
+          onRemove={removeFromWatchlist}
+          isWatchlisted={$isWatchlisted}
+          isWatchlistUpdating={$isWatchlistUpdating}
+        />
+      </RenderFor>
+      {#if "episode" in media}
+        <DurationTag>
+          {m.number_of_episodes({ count: media.episode.count })}
+        </DurationTag>
+      {:else if type === "movie"}
+        <DurationTag>
+          {toHumanDuration({ minutes: media.runtime }, languageTag())}
+        </DurationTag>
+      {/if}
+    {/snippet}
+  </MediaCover>
 
   <CardFooter>
     <Link href={UrlBuilder.media(type, media.slug)}>
@@ -73,13 +84,6 @@
     </Link>
     {#snippet actions()}
       <RenderFor audience="authenticated">
-        <WatchlistActionButton
-          title={media.title}
-          onAdd={addToWatchlist}
-          onRemove={removeFromWatchlist}
-          isWatchlisted={$isWatchlisted}
-          isWatchlistUpdating={$isWatchlistUpdating}
-        />
         <MarkAsWatchedActionButton
           title={media.title}
           isWatched={$isWatched}
@@ -100,7 +104,7 @@
 
 {#if type === "show"}
   <EpisodeCard>
-    {@render content(media.thumb.url)}
+    {@render content(media.cover.url.thumb)}
   </EpisodeCard>
 {/if}
 

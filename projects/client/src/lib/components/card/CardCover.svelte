@@ -1,8 +1,11 @@
 <script lang="ts">
   import CrossOriginImage from "$lib/features/image/components/CrossOriginImage.svelte";
+  import Link from "../link/Link.svelte";
   import type { CardCoverProps } from "./CardCoverProps";
 
-  const { src, alt, tags, isLoading }: CardCoverProps = $props();
+  const props: CardCoverProps = $props();
+  const { src, alt, tags, isLoading } = props;
+  const href = $derived("href" in props ? props.href : undefined);
 
   let isImagePending = $state(true);
   $effect(() => {
@@ -18,14 +21,16 @@
   <div class="card-cover-tags">
     {@render tags?.()}
   </div>
-  <div class="card-cover-image">
-    <CrossOriginImage
-      animate={false}
-      {src}
-      {alt}
-      onload={() => (isImagePending = false)}
-    />
-  </div>
+  <Link focusable={false} {href}>
+    <div class="card-cover-image">
+      <CrossOriginImage
+        animate={false}
+        {src}
+        {alt}
+        onload={() => (isImagePending = false)}
+      />
+    </div>
+  </Link>
 </div>
 
 <style>
@@ -46,6 +51,8 @@
     justify-content: flex-end;
     align-items: flex-start;
     gap: var(--ni-4);
+
+    pointer-events: none;
   }
 
   .card-cover {

@@ -91,6 +91,7 @@
     all: unset;
 
     cursor: pointer;
+    pointer-events: all;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
 

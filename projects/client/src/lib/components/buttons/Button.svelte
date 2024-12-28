@@ -146,6 +146,7 @@
     --color-shadow: color-mix(in srgb, black 32%, transparent 68%);
 
     all: unset;
+    pointer-events: all;
     display: flex;
     align-items: center;
     gap: var(--ni-16);

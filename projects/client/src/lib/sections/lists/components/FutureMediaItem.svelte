@@ -38,23 +38,12 @@
 </script>
 
 {#snippet content(mediaCoverImageUrl: string)}
-  <Link focusable={false} href={UrlBuilder.media(type, media.slug)}>
-    <MediaCover src={mediaCoverImageUrl} alt={`${media.title} poster`}>
-      {#snippet tags()}
-        <DurationTag>
-          {media.year ?? m.tba_label()}
-        </DurationTag>
-      {/snippet}
-    </MediaCover>
-  </Link>
-
-  <CardFooter>
-    <Link href={UrlBuilder.media(type, media.slug)}>
-      <p class="recommendation-title small ellipsis">
-        {media.title}
-      </p>
-    </Link>
-    {#snippet actions()}
+  <MediaCover
+    href={UrlBuilder.media(type, media.slug)}
+    src={mediaCoverImageUrl}
+    alt={`${media.title} poster`}
+  >
+    {#snippet tags()}
       <RenderFor audience="authenticated">
         <WatchlistActionButton
           title={media.title}
@@ -64,7 +53,18 @@
           isWatchlistUpdating={$isWatchlistUpdating}
         />
       </RenderFor>
+      <DurationTag>
+        {media.year ?? m.tba_label()}
+      </DurationTag>
     {/snippet}
+  </MediaCover>
+
+  <CardFooter>
+    <Link href={UrlBuilder.media(type, media.slug)}>
+      <p class="recommendation-title small ellipsis">
+        {media.title}
+      </p>
+    </Link>
   </CardFooter>
 {/snippet}
 
@@ -76,7 +76,7 @@
 
 {#if type === "show"}
   <EpisodeCard>
-    {@render content(media.thumb.url)}
+    {@render content(media.cover.url.thumb)}
   </EpisodeCard>
 {/if}
 
