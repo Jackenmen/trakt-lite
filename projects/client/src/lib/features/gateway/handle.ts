@@ -1,3 +1,4 @@
+import { env } from '$env/dynamic/private';
 import type { Handle } from '@sveltejs/kit';
 
 export const handle: Handle = async ({ event, resolve }) => {
@@ -17,6 +18,7 @@ export const handle: Handle = async ({ event, resolve }) => {
     const token = event.locals.auth?.token?.access;
 
     const headers = new Headers(event.request.headers);
+    headers.set('trakt-api-key', env.TRAKT_CLIENT_ID);
 
     if (token) {
       headers.set('Authorization', `Bearer ${token}`);

@@ -25,7 +25,7 @@ export const api = ({
   cancellationId,
 }: ApiParams = {}) =>
   traktApi({
-    apiKey: TRAKT_CLIENT_ID,
+    apiKey: 'INSECURITY',
     environment,
     fetch,
     cancellable,

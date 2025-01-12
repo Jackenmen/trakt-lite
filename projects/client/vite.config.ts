@@ -30,7 +30,6 @@ const TRAKT_TARGET_ENVIRONMENT = Environment.production_private;
 
 export default defineConfig(({ mode }) => ({
   define: {
-    'TRAKT_CLIENT_ID': `"${process.env.TRAKT_CLIENT_ID}"`,
     'TRAKT_MODE': `"${mode}${process.env.IS_PREVIEW ? '-preview' : ''}"`,
     'TRAKT_TARGET_ENVIRONMENT': `"${TRAKT_TARGET_ENVIRONMENT}"`,
     'FIREBASE_PROJECT_ID': `"${process.env.FIREBASE_PROJECT_ID}"`,

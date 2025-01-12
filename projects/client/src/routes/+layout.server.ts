@@ -1,4 +1,5 @@
-import { isAuthorized } from '$lib/features/auth/utils/isAuthorized.ts';
+import { env } from '$env/dynamic/private';
+import { isAuthorized } from '$lib/features/auth/utils/isAuthorized';
 import { buildOAuthUrl } from '$lib/utils/url/buildOAuthLink.ts';
 import { isBotAgent } from '$lib/utils/url/isBotAgent';
 import type { LayoutServerLoad } from './$types';
@@ -11,7 +12,7 @@ export const load: LayoutServerLoad = (
   const defaultResponse = {
     theme: locals.theme,
     auth: {
-      url: buildOAuthUrl(TRAKT_CLIENT_ID, requestUrl.origin),
+      url: buildOAuthUrl(env.TRAKT_CLIENT_ID, requestUrl.origin),
       isAuthorized: isAuthorized(locals),
     },
     isBot: isBotAgent(request.headers.get('user-agent')),
