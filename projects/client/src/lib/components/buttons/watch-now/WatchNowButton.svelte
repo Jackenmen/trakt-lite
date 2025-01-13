@@ -39,7 +39,7 @@
    * Let's replace this watch now button with actionable tags on the cover (eg: Netflix, Prime Video, etc.)
    * TV apps should go with actionable button, web and mobile should go with tags on the cover.
    */
-  const isEnabled = false;
+  const isEnabled = true;
 </script>
 
 {#if isEnabled}
